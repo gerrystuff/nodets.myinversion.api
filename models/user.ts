@@ -1,4 +1,4 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes,SchemaOptions } from 'sequelize';
 import database from '../database/database';
 
 const User = database.define('User',{
@@ -10,6 +10,10 @@ const User = database.define('User',{
     user_password: {
         type: DataTypes.STRING
     },
+    user_role: {
+        type: DataTypes.STRING,
+    }
 })
+
 
 export default User;

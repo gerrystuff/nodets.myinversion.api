@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.authController = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const user_1 = __importDefault(require("../models/user"));
-const JTW_1 = require("../Utilities/JTW");
+const JTW_1 = require("../middlewares/JTW");
 //endpoint
 class AuthController {
     login(req, res) {
@@ -39,7 +39,7 @@ class AuthController {
                 //generar el JWT
                 const token = yield JTW_1.generarJWT(user.id);
                 res.json({
-                    user,
+                    status: 'ok',
                     token
                 });
             }

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { productController } from '../controllers/productController';
-import { validarJWT  } from '../Utilities/JTW';
+import { validarJWT  } from '../middlewares/JTW';
 
 
 
@@ -14,10 +14,11 @@ class ProductRoutes {
 
     config(): void {
         this.router.get('/',[validarJWT],productController.list);
-        this.router.get('/:id',productController.getOne);
-        this.router.post('/',productController.create);
-        this.router.delete('/:id',productController.delete);
-        this.router.put('/:id',productController.update);
+        //pendientes
+        this.router.get('/:id',[validarJWT],productController.getOne);
+        this.router.post('/',[validarJWT],productController.create);
+        this.router.delete('/:id',[validarJWT],productController.delete);
+        this.router.put('/:id',[validarJWT],productController.update);
 
     }
 }

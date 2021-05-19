@@ -1,7 +1,7 @@
 import { Request,Response } from 'express';
 import  bcrypt  from 'bcryptjs';
 import User from '../models/user';
-import { generarJWT } from '../Utilities/JTW';
+import { generarJWT } from '../middlewares/JTW';
 
 
 //endpoint
@@ -39,7 +39,7 @@ class AuthController {
 
 
       res.json({
-        user,
+        status:'ok',
         token
       })
       

@@ -21,8 +21,11 @@ class UserController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const users = yield user_1.default.findAll();
-                const userAuth = req.user;
-                res.json({ users, userAuth });
+                const userAuth = {
+                    uid: req.user.id,
+                    user_name: req.user.user_name
+                };
+                res.json({ ok: 'true', users, userAuth });
             }
             catch (error) {
                 res.status(500).json({
@@ -40,7 +43,11 @@ class UserController {
                 const salt = bcryptjs_1.default.genSaltSync();
                 user.user_password = bcryptjs_1.default.hashSync(body.user_password, salt);
                 yield user.save();
-                res.json(user);
+                const aux = {
+                    status: true,
+                    uid: user.id
+                };
+                res.json(aux);
             }
             catch (error) {
                 res.status(500).json({
@@ -51,14 +58,27 @@ class UserController {
     }
     getOne(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            const user = yield user_1.default.findByPk(id);
-            if (user)
-                res.json(user);
-            else
-                res.status(404).json({
-                    msg: `the user with the id: ${id} does not exist.`
+            try {
+                const { id } = req.params;
+                const user = yield user_1.default.findByPk(id);
+                if (user) {
+                    const userAuth = {
+                        uid: req.user.id,
+                        user_name: req.user.user_name
+                    };
+                    res.json({ ok: true, user, userAuth });
+                }
+                else {
+                    res.status(404).json({
+                        msg: `the user with the id: ${id} does not exist.`
+                    });
+                }
+            }
+            catch (error) {
+                res.status(500).json({
+                    msg: error.parent.sqlMessage
                 });
+            }
         });
     }
     delete(req, res) {
@@ -72,7 +92,11 @@ class UserController {
                     });
                 }
                 yield user.destroy();
-                res.json(user);
+                const userAuth = {
+                    uid: req.user.id,
+                    user_name: req.user.user_name
+                };
+                res.json({ ok: true, msg: 'user eliminated.', userAuth });
             }
             catch (error) {
                 res.status(500).json({
@@ -93,7 +117,11 @@ class UserController {
                     });
                 }
                 yield user.update(body);
-                res.json(user);
+                const userAuth = {
+                    uid: req.user.id,
+                    user_name: req.user.user_name
+                };
+                res.json({ ok: true, msg: 'user updated.', userAuth });
             }
             catch (error) {
                 res.status(500).json({

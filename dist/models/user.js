@@ -12,6 +12,9 @@ const User = database_1.default.define('User', {
     user_password: {
         type: sequelize_1.DataTypes.STRING
     },
+    user_role: {
+        type: sequelize_1.DataTypes.STRING,
+    }
 });
 exports.default = User;
 //# sourceMappingURL=user.js.map
