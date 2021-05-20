@@ -1,11 +1,11 @@
 import { Sequelize } from 'sequelize';
 
 const database = new Sequelize(
-    'myinversion',
-    'root',
-    'Redcode010',
+    'heroku_caf616ba1ae2085', //database
+    'b1e7faacb53c5a', //user
+    '91872644', //password
         {
-            host: 'localhost',
+            host: 'us-cdbr-east-03.cleardb.com', //host
             dialect: 'mysql'        }
     );
 
