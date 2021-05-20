@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { authController } from '../controllers/authController';
+import { validarJWT } from '../middlewares/JTW';
 
 
 class AuthRoutes {
@@ -12,9 +13,7 @@ class AuthRoutes {
 
     config(): void {
         this.router.post('/login',authController.login);
-        this.router.get('/:id',authController.getOne);
-        this.router.delete('/:id',authController.delete);
-        this.router.put('/:id',authController.update);
+        this.router.get('/renew',validarJWT,authController.validate)
 
     }
 }

@@ -26,33 +26,44 @@ class AuthController {
                 const user = yield user_1.default.findOne({ where: { user_name: user_name } });
                 if (!user) {
                     return res.status(400).json({
-                        msg: 'Usuario / Password no son correctos - username'
+                        ok: false,
+                        msg: 'Nombre de usuario incorrecto.'
                     });
                 }
                 //verificamos contraseña
                 const validPassword = bcryptjs_1.default.compareSync(user_password, user.user_password);
                 if (!validPassword) {
                     return res.status(400).json({
-                        msg: 'Usuario / Password no son correctos - password'
+                        ok: false,
+                        msg: 'Contraseña incorrecta.'
                     });
                 }
                 //generar el JWT
                 const token = yield JTW_1.generarJWT(user.id);
                 res.json({
-                    status: 'ok',
+                    ok: true,
+                    uid: user.id,
+                    name: user_name,
                     token
                 });
             }
             catch (error) {
                 console.log(error);
                 return res.status(500).json({
+                    ok: false,
                     msg: 'Hable con el administrador'
                 });
             }
         });
     }
-    create(req, res) {
+    validate(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            res.json({
+                ok: true,
+                uid: req.user.id,
+                name: req.user.user_name
+            });
+            req.user;
         });
     }
     getOne(req, res) {

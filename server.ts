@@ -5,6 +5,7 @@ import authRoutes from './routes/authRoutes';
 
 import database from './database/database';
 import productRoutes from './routes/productRoutes';
+import  path  from 'path';
 
 class Server {
 
@@ -30,6 +31,10 @@ class Server {
       this.app.use('/api/users',userRoutes);
       this.app.use('/auth',authRoutes);
       this.app.use('/api/products',productRoutes);
+
+      this.app.get('*',(req,res) => {
+        res.sendFile(path.resolve( __dirname,'public/index.html'));
+      })
 
     }
 

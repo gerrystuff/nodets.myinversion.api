@@ -18,6 +18,7 @@ const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
 const database_1 = __importDefault(require("./database/database"));
 const productRoutes_1 = __importDefault(require("./routes/productRoutes"));
+const path_1 = __importDefault(require("path"));
 class Server {
     constructor() {
         this.app = express_1.default();
@@ -35,6 +36,9 @@ class Server {
         this.app.use('/api/users', userRoutes_1.default);
         this.app.use('/auth', authRoutes_1.default);
         this.app.use('/api/products', productRoutes_1.default);
+        this.app.get('*', (req, res) => {
+            res.sendFile(path_1.default.resolve(__dirname, 'public/index.html'));
+        });
     }
     connectDB() {
         return __awaiter(this, void 0, void 0, function* () {

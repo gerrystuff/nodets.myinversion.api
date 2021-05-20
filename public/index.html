@@ -1,47 +1,17 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
+  <!--Bootstrap 4-->
+<link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
 
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo Login</title>
-    <meta name="google-signin-client_id"
-        content="16199870964-lu4radrhleffc04gur3jkf503hr0qodd.apps.googleusercontent.com">
-</head>
+<meta charset="utf-8">
+  <title>MyInversion</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
 
-<body>
-    <h1>Google sign-in</h1>
-    <hr />
-
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-
-    <a href="#" onclick="signOut();">Sign out</a>
-
-
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script>
-        function onSignIn(googleUser) {
-            var profile = googleUser.getBasicProfile();
-            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-            console.log('Name: ' + profile.getName());
-            console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-
-            const id_token = googleUser.getAuthResponse().id_token;
-            console.log(id_token);
-        }
-        function signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-                console.log('User signed out.');
-            });
-        }
-
-
-    </script>
-
-</body>
-
+<link rel="stylesheet" href="styles.0d02f4680b69b6216a89.css"></head>
+<body class="mat-typography">
+  <app-root></app-root>
+<script src="runtime.77dd4a84ec9c63e73afa.js" defer></script><script src="polyfills.00096ed7d93ed26ee6df.js" defer></script><script src="main.679b4b8c58d85285f046.js" defer></script></body>
 </html>
