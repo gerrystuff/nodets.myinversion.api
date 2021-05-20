@@ -11,8 +11,8 @@ class ProductRoutes {
     config() {
         this.router.get('/', [JTW_1.validarJWT], productController_1.productController.list);
         //pendientes
-        this.router.get('/:id', [JTW_1.validarJWT], productController_1.productController.getOne);
         this.router.post('/', [JTW_1.validarJWT], productController_1.productController.create);
+        this.router.get('/:id', [JTW_1.validarJWT], productController_1.productController.getOne);
         this.router.delete('/:id', [JTW_1.validarJWT], productController_1.productController.delete);
         this.router.put('/:id', [JTW_1.validarJWT], productController_1.productController.update);
     }

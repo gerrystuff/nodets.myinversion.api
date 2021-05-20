@@ -35,18 +35,98 @@ class ProductController {
     }
     create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            const { body } = req;
+            try {
+                const checkproduct = yield product_1.default.findOne({ where: { product_name: body.product_name } });
+                if (checkproduct) {
+                    return res.status(400).json({
+                        ok: false,
+                        msg: 'Ya existe un producto con ese nombre.'
+                    });
+                }
+                const product = product_1.default.build(body);
+                //Crear producto
+                yield product.save();
+                res.status(201).json({
+                    ok: true,
+                    msg: 'Producto creado con exito',
+                    product: product
+                });
+            }
+            catch (error) {
+                res.status(500).json({
+                    ok: false,
+                    msg: 'No se creo producto, campos invalidos.'
+                });
+            }
         });
     }
     getOne(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id } = req.params;
+                const product = yield product_1.default.findByPk(id);
+                if (product) {
+                    res.json({ ok: true, product });
+                }
+                else {
+                    res.status(404).json({
+                        ok: false,
+                        msg: `el producto  no existe.`
+                    });
+                }
+            }
+            catch (error) {
+                res.status(500).json({
+                    ok: false,
+                    msg: error.parent.sqlMessage
+                });
+            }
         });
     }
     delete(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            try {
+                const product = yield product_1.default.findByPk(id);
+                if (!product) {
+                    return res.status(404).json({
+                        ok: false,
+                        msg: `el producto no existe.`
+                    });
+                }
+                yield product.destroy();
+                res.json({ ok: true, msg: 'producto eliminado.' });
+            }
+            catch (error) {
+                res.status(500).json({
+                    ok: false,
+                    msg: error.parent.sqlMessage
+                });
+            }
         });
     }
     update(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            const { body } = req;
+            try {
+                const product = yield product_1.default.findByPk(id);
+                if (!product) {
+                    return res.status(404).json({
+                        ok: false,
+                        msg: `el usuario no existe.`
+                    });
+                }
+                yield product.update(body);
+                res.json({ ok: true, msg: 'producto acutalizado.', product });
+            }
+            catch (error) {
+                res.status(500).json({
+                    ok: false,
+                    msg: error.parent.sqlMessage
+                });
+            }
         });
     }
 }

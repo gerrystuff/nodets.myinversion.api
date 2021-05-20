@@ -59,7 +59,8 @@ class UserController {
             }
             catch (error) {
                 res.status(500).json({
-                    msg: error.parent.sqlMessage
+                    ok: false,
+                    msg: 'No se pudo crear usuario en la db'
                 });
             }
         });
@@ -78,7 +79,7 @@ class UserController {
                 }
                 else {
                     res.status(404).json({
-                        msg: `the user with the id: ${id} does not exist.`
+                        msg: `el usuario no existe.`
                     });
                 }
             }
