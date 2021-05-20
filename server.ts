@@ -32,9 +32,9 @@ class Server {
       this.app.use('/auth',authRoutes);
       this.app.use('/api/products',productRoutes);
 
-      this.app.get('*',(req,res) => {
-        res.sendFile(path.resolve( __dirname,'public/index.html'));
-      })
+    //   this.app.get('**',(req,res) => {
+    //     res.sendFile(path.resolve(__dirname,'public/index.html'));
+    //   })
 
     }
 
