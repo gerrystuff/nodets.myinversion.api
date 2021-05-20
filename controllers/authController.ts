@@ -19,7 +19,8 @@ class AuthController {
 
       if(!user) {
         return res.status(400).json({
-          msg: 'Usuario / Password no son correctos - username'
+          ok:false,
+          msg: 'Nombre de usuario incorrecto.'
         })
       }
 
@@ -29,7 +30,8 @@ class AuthController {
 
     if(!validPassword){
       return res.status(400).json({
-        msg: 'Usuario / Password no son correctos - password'
+        ok:false,
+        msg: 'Contraseña incorrecta.'
       })
     }
 
@@ -39,20 +41,30 @@ class AuthController {
 
 
       res.json({
-        status:'ok',
+        ok:true,
+        uid:user.id,
+        name:user_name,
         token
+
       })
       
     } catch (error) {
       console.log(error)
       return res.status(500).json({
+        ok:false,
         msg: 'Hable con el administrador'
       })
     }
 
 }
-  public async create (req: Request, res:Response) {
+  public async validate (req: any, res:Response) {
 
+    res.json({
+      ok:true,
+      uid:req.user.id,
+      name:req.user.user_name
+    })
+    req.user
 
 }
 

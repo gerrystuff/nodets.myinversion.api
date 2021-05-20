@@ -25,7 +25,7 @@ class UserController {
                     uid: req.user.id,
                     user_name: req.user.user_name
                 };
-                res.json({ ok: 'true', users, userAuth });
+                res.json({ ok: true, users, userAuth });
             }
             catch (error) {
                 res.status(500).json({
@@ -38,16 +38,24 @@ class UserController {
         return __awaiter(this, void 0, void 0, function* () {
             const { body } = req;
             try {
+                //check username
+                const checkuser = yield user_1.default.findOne({ where: { user_name: body.user_name } });
+                if (checkuser) {
+                    return res.status(400).json({
+                        ok: false,
+                        msg: 'Usuario con ese nombre ya existe.'
+                    });
+                }
                 const user = user_1.default.build(body);
                 //Encriptacion de contraseña
                 const salt = bcryptjs_1.default.genSaltSync();
                 user.user_password = bcryptjs_1.default.hashSync(body.user_password, salt);
+                //Crea usuario en la db
                 yield user.save();
-                const aux = {
-                    status: true,
-                    uid: user.id
-                };
-                res.json(aux);
+                res.status(201).json({
+                    ok: true,
+                    uid: user.id,
+                });
             }
             catch (error) {
                 res.status(500).json({

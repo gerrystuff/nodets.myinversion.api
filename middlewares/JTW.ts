@@ -28,6 +28,7 @@ export const generarJWT = (uid = '') => {
 
 
 
+
 export const validarJWT = async (req:any, res:Response, next:any) => {
 
     const token = req.header('x-token');

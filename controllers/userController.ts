@@ -15,7 +15,7 @@ class UserController {
         uid: req.user.id,
         user_name: req.user.user_name
       }
-      res.json({ ok: 'true', users, userAuth })
+      res.json({ ok: true, users, userAuth })
 
     } catch (error) {
 
@@ -30,7 +30,20 @@ class UserController {
 
     const { body } = req;
 
+
     try {
+
+      //check username
+      
+      const checkuser:any = await User.findOne({where:{user_name:body.user_name}});
+
+      if(checkuser){
+        return res.status(400).json({
+          ok:false,
+          msg:'Usuario con ese nombre ya existe.'
+        })
+      }
+
 
       const user: any = User.build(body);
 
@@ -39,13 +52,16 @@ class UserController {
       const salt = bcrypt.genSaltSync();
       user.user_password = bcrypt.hashSync(body.user_password, salt);
 
+
+      //Crea usuario en la db
       await user.save();
 
-      const aux = {
-        status: true,
-        uid: user.id
-      }
-      res.json(aux);
+      res.status(201).json(
+        {
+          ok:true,
+          uid:user.id,
+        }
+      );
 
     } catch (error) {
 
